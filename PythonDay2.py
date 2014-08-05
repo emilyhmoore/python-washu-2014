@@ -62,3 +62,7 @@ veggie_burger=VeggieBurger(["tomato", "bacon"], "bread")
 print veggie_burger.cooking_time()
 print veggie_burger.tastiness()
 print veggie_burger
+
+def first(x):
+	x[0]
+	
