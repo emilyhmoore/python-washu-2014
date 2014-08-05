@@ -12,7 +12,10 @@ class Clock():
 		time_in_minutes=self.hours*60+self.minutes
 		time_in_minutes-=other
 		return self.new(time_in_minutes)
-		
+	
+	def __eq__(self,other):
+		return self.__str__()==other
+	
 	def new (self, time_in_minutes):
 		if time_in_minutes>1440:
 			days=time_in_minutes/1440
