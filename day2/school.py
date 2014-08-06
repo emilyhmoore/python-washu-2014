@@ -4,6 +4,6 @@ class School():
 		self.db={}
 	def add(self, student, grade):
 		student_set=set()
-		student_set.update([student])
+		student_set.add(student)
 		self.db[grade]=student_set #creats a set
 		
