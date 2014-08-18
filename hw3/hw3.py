@@ -3,6 +3,8 @@ import timeit
 import matplotlib.pyplot as plt
 import numpy
 
+##Adapted from:
+##http://interactivepython.org/courselib/static/pythonds/SortSearch/TheBubbleSort.html
 def bubblesort(numbers):
 	for number in range(len(numbers)-1):
 		for i in range(len(numbers)-1):
@@ -12,6 +14,8 @@ def bubblesort(numbers):
 				numbers[i+1]=placeholder
 	return numbers
 
+##Adapted from:
+##http://interactivepython.org/courselib/static/pythonds/SortSearch/TheMergeSort.html
 def mergesort(numbers):
 	if len(numbers)>1:
 		midpoint=len(numbers)//2
