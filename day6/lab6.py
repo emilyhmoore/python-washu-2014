@@ -30,8 +30,8 @@ print len(petitions)
 for petition in petitions:
 	p = clean_html(str(petition.find("a")))
 	print p
-signatures = soup.findAll("div", attrs={'class':'num-sig'})
-print len(signatures)
+#signatures = soup.findAll("div", attrs={'class':'num-sig'})
+#print len(signatures)
 for signature in signatures:
 	s = clean_html(str(signature.find("span", attrs={'class':'num'})))
 	print s
