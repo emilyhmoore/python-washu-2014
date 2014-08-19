@@ -6,6 +6,9 @@ class Node:
 	def __str__(self):
 		return str(self.value)
 
+##adapted and merged together from multiple sources:
+##http://www.danielacton.com/Data-Structures/Linked-List/Python/
+##
 class LinkedList:
 	def __init__(self, value):
 		self.value=value
