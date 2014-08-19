@@ -1,4 +1,5 @@
 # Scraper to collect petition info from petitions.whitehouse.gov
+<<<<<<< HEAD
 from bs4 import BeautifulSoup
 import csv
 from nltk.util import clean_html
@@ -8,6 +9,18 @@ import urllib2
 page_to_scrape = 'https://petitions.whitehouse.gov/petitions'
 
 # What info do we want?
+=======
+
+from BeautifulSoup import BeautifulSoup
+import csv 
+from nltk.util import clean_html
+import urllib2 
+
+# What page? 
+page_to_scrape = 'https://petitions.whitehouse.gov/petitions'
+
+# What info do we want? 
+>>>>>>> upstream/master
 headers = ["Summary", "Signatures"]
 
 # Where do we save info?
@@ -28,6 +41,7 @@ soup.prettify()
 petitions = soup.findAll("div", attrs={'class':'title'})
 print len(petitions)
 for petition in petitions:
+<<<<<<< HEAD
 	p = clean_html(str(petition.find("a")))
 	print p
 #signatures = soup.findAll("div", attrs={'class':'num-sig'})
@@ -42,4 +56,22 @@ for i in range(20):
 	s = clean_html(str(signature.find("span", attrs={'class':'num'})))
 	csvwriter.writerow([p, s])
 	
+=======
+  p = clean_html(str(petition.find("a")))
+  print p
+
+signatures = soup.findAll("div", attrs={'class':'num-sig'})
+print len(signatures)
+for signature in signatures:
+  s = clean_html(str(signature.find("span", attrs={'class':'num'})))
+  print s
+
+for i in range(20):
+  petition = petitions[i]
+  p = clean_html(str(petition.find("a")))
+  signature = signatures[i]
+  s = clean_html(str(signature.find("span", attrs={'class':'num'})))
+  csvwriter.writerow([p, s])
+
+>>>>>>> upstream/master
 readFile.close()
