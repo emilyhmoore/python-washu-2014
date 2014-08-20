@@ -9,7 +9,7 @@ import re
 page_to_scrape = 'http://www.washingtonpost.com/blog/monkey-cage/Archive/201408'
 
 # What info do we want?
-headers = ["Title", "Author", "Publish Date", "URL","Is_Post","Comments"]
+headers = ["Title", "Author", "Publish Date", "URL","Comments", "Is_post"]
 
 # Where do we save info?
 filename = "monkey-cage-blogs.csv"
@@ -51,6 +51,19 @@ for i in range(len(theurls)):
 	u=theurls[i]
 	u=u["href"]
 #	print u
+
+##Note: the page of the posts doesn't actually list the comments in the source code
+##Due to the way javascript handles the comments. 
+##The system on the archives reports 0 for all comments, which is incorrect, but the only
+##comment count I could get. 
+comments=soup.findAll("span", attrs={"class": "count-bubble"})
+
+is_post=[]
+for i in range(51):
+	if dates[i] !=None and authors[i]!=None and titles[i] !=None:
+		is_post.append(True)
+	else:
+		is_post.append(False)
 	
 for i in range(51):
 	title = titles[i]
@@ -61,6 +74,10 @@ for i in range(51):
 	d="".join(clean_html(str(date)).split("Posted at ")[1::])
 	url=theurls[i]["href"]
 	u=theurls[i]["href"]
-	csvwriter.writerow([p, s, d, u])
+	comment=comments[i]
+	c=clean_html(str(comment))
+	ips=is_post[i]
+	ip=int(ips)
+	csvwriter.writerow([p, s, d, u, c, ip])
 	
 readFile.close()
