@@ -1,67 +1,59 @@
-engine = sqlalchemy.create_engine('sqlite:///geog.db', echo=False)
+import sqlalchemy
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String, ForeignKey, and_, or_
+from sqlalchemy.orm import relationship, backref, sessionmaker
+
+engine = sqlalchemy.create_engine('sqlite:///geog2.db', echo=False)
 
 Base = declarative_base() 
 
 # Schemas
 class Region(Base):
   __tablename__ = 'regions'
-
   id = Column(Integer, primary_key=True)
   name = Column(String)
   departments = relationship("Department")
-
   def __init__(self, name):
     self.name = name 
-
   def __repr__(self):
     return "<Region('%s')>" % self.id 
 
 class Department(Base):
   __tablename__ = 'departments'
-
   id = Column(Integer, primary_key=True)
   deptname = Column(String)
   region_id = Column(Integer, ForeignKey('regions.id')) 
   towns = relationship("Town")
-
   def __init__(self, deptname):
     self.deptname = deptname 
-
   def __repr__(self):
     return "<Department('%s')>" % self.id 
 
 class Town(Base):
   __tablename__ = 'towns'
-
   id = Column(Integer, primary_key=True)
   name = Column(String)
   population = Column(Integer)
   dept_id = Column(Integer, ForeignKey('departments.id'))
-
   def __init__(self, name, population):
     self.name = name 
     self.population = population
-
   def __repr__(self):
     return "<Town('%s')>" % (self.name)
 
 class Distance(Base):
   __tablename__ = 'distances'
-
   id = Column(Integer, primary_key=True)
   towndepart = Column(String, ForeignKey('towns.name'))
   townarrive = Column(String, ForeignKey('towns.name'))
   # could also use id's 
   distance = Column(Integer)
-
   td = relationship("Town", 
     primaryjoin= towndepart == Town.name)
   ta = relationship("Town", 
     primaryjoin = townarrive == Town.name)
-  
   def __init__(self, distance):
     self.distance = distance 
-
   def __repr__(self):
     return "<Distance('%s', '%s', '%s')>" % (self.towndepart, self.townarrive, self.distance)
 
@@ -96,6 +88,24 @@ reg2.departments.append(dept4)
 session.add_all([dept1, dept2, dept3, dept4])
 
 # TODO: Create towns, nested in departments
+a = Town('Town a', 110000)
+dept1.towns.append(a)
+
+b = Town('Town b', 80000)
+dept3.towns.append(b)
+
+c = Town('Town c', 300000)
+dept3.towns.append(c)
+
+d = Town('Town d', 50000)
+dept2.towns.append(d)
+
+e= Town ('Town e', 113000)
+dept2.towns.append(e)
+
+f= Town ('Town f', 70000)
+dept1.towns.append(f)
+
 
 session.add_all([a,b,c,d,e,f])
 
